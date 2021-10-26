@@ -33,21 +33,6 @@ public class Loader {
         }
     }
 
-    private Department defineDepartment(String name) {
-
-        switch (Department.valueOf(name)) {
-            case IT:
-                return Department.IT;
-            case HR:
-                return Department.HR;
-            case LOGISTICS:
-                return Department.LOGISTICS;
-            case SECURITY:
-                return Department.SECURITY;
-        }
-        return Department.UNKNOWN;
-    }
-
     public void print() {
         employeeList.forEach(System.out::println);
     }
