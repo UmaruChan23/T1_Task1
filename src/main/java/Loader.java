@@ -15,7 +15,7 @@ public class Loader {
             List<String> strings = Files.readAllLines(Paths.get(path));
             for(int i = 1; i < strings.size(); i++) {
                 String string = strings.get(i);
-                addEmployee(string.split(",", 3));
+                addEmployee(string.split(","));
             }
         } catch (Throwable e) {
             e.printStackTrace();
