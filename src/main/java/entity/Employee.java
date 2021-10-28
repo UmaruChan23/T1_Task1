@@ -1,16 +1,14 @@
 package entity;
 
-import java.nio.charset.Charset;
+import java.math.BigDecimal;
 
 public class Employee {
     private String name;
-    private double salary;
-    private Department department;
+    private BigDecimal salary;
 
-    public Employee(String name, double salary, Department department) {
+    public Employee(String name, Double salary) {
         this.name = name;
-        this.salary = salary;
-        this.department = department;
+        this.salary = BigDecimal.valueOf(salary);
     }
 
     public String getName() {
@@ -21,20 +19,12 @@ public class Employee {
         this.name = name;
     }
 
-    public double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     @Override
@@ -42,7 +32,6 @@ public class Employee {
         return "Employee{" +
                 "name='" + name + '\'' +
                 ", salary=" + salary +
-                ", department=" + department +
                 '}';
     }
 }
