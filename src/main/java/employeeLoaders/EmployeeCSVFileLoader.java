@@ -40,7 +40,7 @@ public class EmployeeCSVFileLoader implements EmployeeFileLoader{
             if(employeeData.length < 3) throw new EmployeeDataFormatException("Строка " + lineIndex +
                                                                         " содержит недостаточно данных");
             if(employeeData[0].isEmpty() || employeeData[0].matches(".*[!@#$%^&*\\d]"))
-                throw new EmployeeDataFormatException("Имя сотрудника содетжит некорректные" +
+                throw new EmployeeDataFormatException("имя сотрудника содетжит некорректные" +
                         "символы или отсутствует в строке " + lineIndex);
 
             if(employeeData[2].isEmpty() || employeeData[2].matches(".*[!@#$%^&*]"))
