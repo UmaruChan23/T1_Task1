@@ -6,9 +6,9 @@ public class Employee {
     private String name;
     private BigDecimal salary;
 
-    public Employee(String name, Double salary) {
+    public Employee(String name, BigDecimal salary) {
         this.name = name;
-        this.salary = BigDecimal.valueOf(salary);
+        this.salary = salary;
     }
 
     public String getName() {
