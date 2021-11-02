@@ -28,7 +28,8 @@ public class OrganizationController {
             return;
         }
         TransferService transferService = new TransferService();
-        ArrayList<Transfer> transfers = transferService.getPossibleTransfers(organizationController.organization.getDepartmentMap().get("IT"),
+        ArrayList<Transfer> transfers = transferService.getPossibleTransfers(
+                organizationController.organization.getDepartmentMap().get("IT"),
                 organizationController.organization.getDepartmentMap().get("HR"));
         for(Transfer transfer: transfers) {
             System.out.println(transfer);
