@@ -3,13 +3,13 @@ package controller;
 import employeeLoaders.EmployeeCSVFileLoader;
 import employeeLoaders.EmployeeFileLoader;
 import entity.Department;
-import entity.Employee;
 import entity.Organization;
 import entity.Transfer;
 import transfer.TransferService;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class OrganizationController {
     private Organization organization;
@@ -21,19 +21,18 @@ public class OrganizationController {
         EmployeeFileLoader loader = new EmployeeCSVFileLoader();
         try {
             if(args.length > 0) {
-                loader.readDataFromFile(args[0], organizationController.organization);
+                organizationController.organization.getDepartmentMap().putAll(
+                        loader.readDataFromFile(args[0])
+                );
             }
-        } catch (IOException ex) {
-            System.out.println("Не удалось найти файл");
+        } catch (Exception ex) {
+            System.out.println("Произошла ошибка при обработке файла " + args[0]);
             return;
         }
         TransferService transferService = new TransferService();
-        ArrayList<Transfer> transfers = transferService.getPossibleTransfers(
-                organizationController.organization.getDepartmentMap().get("IT"),
-                organizationController.organization.getDepartmentMap().get("HR"));
-        for(Transfer transfer: transfers) {
-            System.out.println(transfer);
-        }
+        List<Department> departments = new ArrayList<>(organizationController.organization.getDepartmentMap().values());
+        transferService.getPossibleTransfers( departments,
+                "C:\\Users\\fmatorin\\IdeaProjects\\Task1\\src\\main\\resources\\result.txt");
     }
 
     public void setOrganization(Organization organization) {

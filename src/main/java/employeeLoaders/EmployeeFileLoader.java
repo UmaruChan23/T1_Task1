@@ -1,9 +1,9 @@
 package employeeLoaders;
 
-import entity.Organization;
+import entity.Department;
 
-import java.io.IOException;
+import java.util.Map;
 
 public interface EmployeeFileLoader {
-    void readDataFromFile(String path, Organization organization) throws IOException;
+    Map<String, Department> readDataFromFile(String path);
 }

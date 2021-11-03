@@ -23,11 +23,14 @@ public class Department {
     }
 
     public BigDecimal getAverageSalary() {
+        if(employeeList.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
         return getTotalSalary().divide(new BigDecimal(employeeList.size()), 2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getTotalSalary() {
-        BigDecimal totalSalary = new BigDecimal(0);
+        BigDecimal totalSalary = BigDecimal.ZERO;
         for(Employee employee: employeeList) {
             totalSalary = totalSalary.add(employee.getSalary());
         }
