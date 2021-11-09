@@ -20,9 +20,6 @@ import java.util.List;
 public class TransferService {
 
     public void getPossibleTransfers(List<Department> departments, String path) {
-        //int n = departments.size(),
-        //k = 2;
-        //BigInteger combinations = factorial(n).divide( factorial(n - k).multiply(factorial(k)) );
         for (int i = 0; i < departments.size(); i++) {
             for (int j = i +1; j < departments.size(); j++) {
                 transferBetweenTwo(departments.get(i), departments.get(j), path);
@@ -30,17 +27,7 @@ public class TransferService {
         }
     }
 
-    private BigInteger factorial(int n) {
-        if (n <= 1) {
-            return BigInteger.ONE;
-        } else {
-            return BigInteger.valueOf(n).multiply(factorial(n - 1));
-        }
-    }
-
     public void transferBetweenTwo(Department firstDepartment, Department secondDepartment, String outputPath) {
-        //результирующий список
-        ArrayList<Transfer> transfers = new ArrayList<>();
         Department fromDepartment; //департамент с большей средней зарплатой
         Department destinationDepartment; //департамент с меньшей средней зарплатой
         if (firstDepartment.getAverageSalary().compareTo(secondDepartment.getAverageSalary()) >= 0) {
@@ -81,7 +68,6 @@ public class TransferService {
                     write(getPossibleAverageSalaryChanges(fromDepartment,
                             destinationDepartment,
                             transferList), outputPath);
-                    //transfers.add(getPossibleAverageSalaryChanges(fromDepartment, destinationDepartment, transferList));
                 }
             }
         }
