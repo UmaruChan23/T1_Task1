@@ -20,9 +20,9 @@ import java.util.List;
 public class TransferService {
 
     public void getPossibleTransfers(List<Department> departments, String path) {
-        int n = departments.size(),
-        k = 2;
-        BigInteger combinations = factorial(n).divide( factorial(n - k).multiply(factorial(k)) );
+        //int n = departments.size(),
+        //k = 2;
+        //BigInteger combinations = factorial(n).divide( factorial(n - k).multiply(factorial(k)) );
         for (int i = 0; i < departments.size(); i++) {
             for (int j = i +1; j < departments.size(); j++) {
                 transferBetweenTwo(departments.get(i), departments.get(j), path);
@@ -69,7 +69,12 @@ public class TransferService {
                     resultSalary = resultSalary.add(employee.getSalary());
                 }
 
-                resultSalary = resultSalary.divide(new BigDecimal(transferList.size()), 2, RoundingMode.HALF_UP);
+                if (transferList.size() > 0) {
+                    resultSalary = resultSalary.divide(new BigDecimal(transferList.size()), 2, RoundingMode.HALF_UP);
+                } else {
+                    continue;
+                }
+
                 //сравниваем получившееся среднее значение зарплаты с текущими по департаментам
                 if (resultSalary.compareTo(fromDepartment.getAverageSalary()) < 0 &&
                         resultSalary.compareTo(destinationDepartment.getAverageSalary()) > 0) {
@@ -120,7 +125,6 @@ public class TransferService {
         return transfer;
     }
 
-    //Сделать генерацию через рекурсию
     //Генератор двоичных последовательностей.
     //Создает набор всех двоичных чисел от 1 до 2^n, где n - число сотрудников
     private ArrayList<int[]> getPossibleCombinations(int elementsNumber, int blockSize) {

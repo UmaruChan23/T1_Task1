@@ -12,7 +12,6 @@ import java.util.List;
 public class OrganizationController {
     private Organization organization;
 
-    //выходной параметр 1
     public static void main(String[] args) {
         OrganizationController organizationController = new OrganizationController();
         organizationController.setOrganization(new Organization("T1"));

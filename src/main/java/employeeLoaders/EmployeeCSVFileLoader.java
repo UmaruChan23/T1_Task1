@@ -4,7 +4,10 @@ import entity.Department;
 import entity.Employee;
 import exception.EmployeeDataFormatException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -16,8 +19,9 @@ public class EmployeeCSVFileLoader implements EmployeeFileLoader {
     @Override
     public Map<String, Department> readDataFromFile(String path) {
         Map<String, Department> departmentMap = new HashMap<>();
-        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
-                (new FileInputStream(path)))) {
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader
+                        (new FileInputStream(path)))) {
             String line;
             int lineIndex = 1;
             while ((line = bufferedReader.readLine()) != null) {
@@ -35,8 +39,8 @@ public class EmployeeCSVFileLoader implements EmployeeFileLoader {
         return departmentMap;
     }
 
-    private void uploadEmployeeData(String[] employeeData, int lineIndex, Map<String,Department> departmentMap) {
-        if(isValidString(employeeData, lineIndex)) {
+    private void uploadEmployeeData(String[] employeeData, int lineIndex, Map<String, Department> departmentMap) {
+        if (isValidString(employeeData, lineIndex)) {
             departmentMap.putIfAbsent(employeeData[2].trim(), new Department(employeeData[2].trim()));
             departmentMap
                     .get(employeeData[2].trim())
