@@ -4,11 +4,9 @@ import employeeLoaders.EmployeeCSVFileLoader;
 import employeeLoaders.EmployeeFileLoader;
 import entity.Department;
 import entity.Organization;
-import entity.Transfer;
 import transfer.TransferService;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class OrganizationController {
@@ -31,8 +29,11 @@ public class OrganizationController {
         }
         TransferService transferService = new TransferService();
         List<Department> departments = new ArrayList<>(organizationController.organization.getDepartmentMap().values());
-        transferService.getPossibleTransfers( departments,
-                "C:\\Users\\fmatorin\\IdeaProjects\\Task1\\src\\main\\resources\\result.txt");
+        if (args.length > 1) {
+            transferService.getPossibleTransfers( departments, args[1]);
+        } else {
+            System.out.println("Файл для записи отсутствует");
+        }
     }
 
     public void setOrganization(Organization organization) {
