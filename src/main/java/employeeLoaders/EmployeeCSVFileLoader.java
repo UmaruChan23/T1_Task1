@@ -2,17 +2,10 @@ package employeeLoaders;
 
 import entity.Department;
 import entity.Employee;
-import entity.Organization;
 import exception.EmployeeDataFormatException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -23,11 +16,8 @@ public class EmployeeCSVFileLoader implements EmployeeFileLoader {
     @Override
     public Map<String, Department> readDataFromFile(String path) {
         Map<String, Department> departmentMap = new HashMap<>();
-        Path employeeFilePath = Paths.get(path);
-        try {
-            InputStream is = Files.newInputStream(employeeFilePath);
-            InputStreamReader isReader = new InputStreamReader(is);
-            BufferedReader bufferedReader = new BufferedReader(isReader);
+        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
+                (new FileInputStream(path)))) {
             String line;
             int lineIndex = 1;
             while ((line = bufferedReader.readLine()) != null) {
@@ -39,7 +29,6 @@ public class EmployeeCSVFileLoader implements EmployeeFileLoader {
                 uploadEmployeeData(data, lineIndex, departmentMap);
                 lineIndex++;
             }
-            bufferedReader.close();
         } catch (IOException ex) {
             System.out.println("Не удалось прочитать файл " + path);
         }
