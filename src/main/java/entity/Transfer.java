@@ -58,14 +58,15 @@ public class Transfer {
 
     @Override
     public String toString() {
-        return "Transfer{" +
-                "destinationDepartment=" + destinationDepartment +
-                ", fromDepartment=" + fromDepartment +
-                ", destinationDepartmentBeforeTransfer=" + destinationDepartmentBeforeTransfer +
-                ", fromDepartmentBeforeTransfer=" + fromDepartmentBeforeTransfer +
-                ", destinationDepartmentAfterTransfer=" + destinationDepartmentAfterTransfer +
-                ", fromDepartmentAfterTransfer=" + fromDepartmentAfterTransfer +
-                ", employeeTransferList=" + employeeTransferList +
-                '}';
+        return "Трансфер" +
+                " в департамент " + destinationDepartment +
+                " из департамента " + fromDepartment +
+                " cотрудников " + employeeTransferList + "\n" +
+                "    Средняя зарплата департамента " + destinationDepartment + "\n" +
+                "     до трансфера " + destinationDepartmentBeforeTransfer + "\n" +
+                "     после трансфера " + destinationDepartmentAfterTransfer + "\n" +
+                "    Средняя зарплата департамента " + fromDepartment + "\n" +
+                "     до трансфера " + fromDepartmentBeforeTransfer + "\n" +
+                "     после трансфера " + fromDepartmentAfterTransfer + "\n";
     }
 }

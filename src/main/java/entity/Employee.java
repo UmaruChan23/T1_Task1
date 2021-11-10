@@ -29,9 +29,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "name='" + name + '\'' +
-                ", salary=" + salary +
-                '}';
+        return "имя: " + name +
+                " зарплата = " + salary;
     }
 }

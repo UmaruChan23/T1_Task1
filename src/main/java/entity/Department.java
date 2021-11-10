@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Department {
+public class Department implements Comparable<Department>{
     private final String name;
     private final List<Employee> employeeList;
 
@@ -35,5 +35,15 @@ public class Department {
             totalSalary = totalSalary.add(employee.getSalary());
         }
         return totalSalary;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int compareTo(Department o) {
+        return this.getAverageSalary().compareTo(o.getAverageSalary());
     }
 }

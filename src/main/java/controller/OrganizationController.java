@@ -7,6 +7,7 @@ import entity.Organization;
 import transfer.TransferService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class OrganizationController {
@@ -18,7 +19,7 @@ public class OrganizationController {
         EmployeeFileLoader loader = new EmployeeCSVFileLoader();
         try {
             if(args.length > 0) {
-                organizationController.organization.getDepartmentMap().putAll(
+                organizationController.getOrganization().getDepartmentMap().putAll(
                         loader.readDataFromFile(args[0])
                 );
             }
@@ -28,8 +29,9 @@ public class OrganizationController {
         }
         TransferService transferService = new TransferService();
         List<Department> departments = new ArrayList<>(organizationController.organization.getDepartmentMap().values());
+        Collections.sort(departments);
         if (args.length > 1) {
-            transferService.getPossibleTransfers( departments, args[1]);
+            transferService.getPossibleTransfers(departments, args[1]);
         } else {
             System.out.println("Файл для записи отсутствует");
         }

@@ -4,38 +4,35 @@ import entity.Department;
 import entity.Employee;
 import entity.Transfer;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TransferService {
 
+    private int transferIndex = 1;
+
     public void getPossibleTransfers(List<Department> departments, String path) {
         for (int i = 0; i < departments.size(); i++) {
             for (int j = i +1; j < departments.size(); j++) {
-                transferBetweenTwo(departments.get(i), departments.get(j), path);
+                transferBetweenTwo(departments.get(j), departments.get(i), path);
             }
         }
     }
 
-    public void transferBetweenTwo(Department firstDepartment, Department secondDepartment, String outputPath) {
-        Department fromDepartment; //департамент с большей средней зарплатой
-        Department destinationDepartment; //департамент с меньшей средней зарплатой
-        if (firstDepartment.getAverageSalary().compareTo(secondDepartment.getAverageSalary()) >= 0) {
-            fromDepartment = firstDepartment;
-            destinationDepartment = secondDepartment;
-        } else {
-            fromDepartment = secondDepartment;
-            destinationDepartment = firstDepartment;
+    public void transferBetweenTwo(Department fromDepartment, Department destinationDepartment, String outputPath) {
+        File file = new File(outputPath);
+        FileWriter writer;
+        try{
+            writer = new FileWriter(file, true);
+        } catch (IOException ex) {
+            System.out.println("Не удалось открыть файл " + outputPath);
+            return;
         }
 
         if (fromDepartment.getEmployeeList().size() != 0) {
@@ -56,6 +53,7 @@ public class TransferService {
                     resultSalary = resultSalary.add(employee.getSalary());
                 }
 
+                //пересмотреть проверку
                 if (transferList.size() > 0) {
                     resultSalary = resultSalary.divide(new BigDecimal(transferList.size()), 2, RoundingMode.HALF_UP);
                 } else {
@@ -65,25 +63,21 @@ public class TransferService {
                 //сравниваем получившееся среднее значение зарплаты с текущими по департаментам
                 if (resultSalary.compareTo(fromDepartment.getAverageSalary()) < 0 &&
                         resultSalary.compareTo(destinationDepartment.getAverageSalary()) > 0) {
-                    write(getPossibleAverageSalaryChanges(fromDepartment,
-                            destinationDepartment,
-                            transferList), outputPath);
+                    try {
+                        writer.write(transferIndex + ") " +getPossibleAverageSalaryChanges(fromDepartment,
+                                destinationDepartment,
+                                transferList) + "\n");
+                        ++transferIndex;
+                    } catch (IOException ex) {
+                        System.out.println("Не удалось провести запись в указанный файл");
+                    }
                 }
             }
         }
-    }
-
-    private void write(Transfer transfer, String path) {
-        Path filePath = Paths.get(path);
-        List<String> line = new ArrayList<>();
-        line.add(transfer.toString());
         try {
-            Files.write(filePath, line,
-                    StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND);
+            writer.close();
         } catch (IOException ex) {
-            System.out.println("Не удалось произвести запись в файл" + path);
+            System.out.println("Поток на запись не закрыт");
         }
     }
 
@@ -101,12 +95,12 @@ public class TransferService {
                                                      Department dest,
                                                      ArrayList<Employee> employees) {
         Transfer transfer = new Transfer(
-                from,
                 dest,
-                from.getAverageSalary(),
+                from,
                 dest.getAverageSalary(),
-                getSalaryChanges(from, employees, false),
+                from.getAverageSalary(),
                 getSalaryChanges(dest, employees, true),
+                getSalaryChanges(from, employees, false),
                 employees);
         return transfer;
     }
