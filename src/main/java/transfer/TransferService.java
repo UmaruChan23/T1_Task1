@@ -53,12 +53,7 @@ public class TransferService {
                     resultSalary = resultSalary.add(employee.getSalary());
                 }
 
-                //пересмотреть проверку
-                if (transferList.size() > 0) {
                     resultSalary = resultSalary.divide(new BigDecimal(transferList.size()), 2, RoundingMode.HALF_UP);
-                } else {
-                    continue;
-                }
 
                 //сравниваем получившееся среднее значение зарплаты с текущими по департаментам
                 if (resultSalary.compareTo(fromDepartment.getAverageSalary()) < 0 &&
